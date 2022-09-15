@@ -165,6 +165,7 @@ def signUp():
                 flash('User Created', category='success')
 
             #after adding redirect them to the home page where you can see all your post
+            #redirecting the user after logging in
                 return redirect(url_for('home'))
 
     
