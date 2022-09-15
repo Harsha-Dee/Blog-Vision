@@ -24,7 +24,7 @@ app.config['SECRET_KEY'] = '123456789234'
 # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:harsha666@localhost/blogdatabase'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://pnczxxjujgbowc:4597bb69f36e5bab482200d7ac0178fbea321764eb1ef2a103aa1f5c37694fd1@ec2-44-207-133-100.compute-1.amazonaws.com:5432/df0o1s75k024ud'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://pnczxxjujgbowc:4597bb69f36e5bab482200d7ac0178fbea321764eb1ef2a103aa1f5c37694fd1@ec2-44-207-133-100.compute-1.amazonaws.com:5432/df0o1s75k024ud'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 
@@ -138,7 +138,7 @@ def signUp():
                 hashedpass = generate_password_hash(password, method='sha256')
 
                 #db = create_engine('mysql+pymysql://root:harsha666@localhost/blogdatabase', encoding='utf8')
-                db = create_engine('postgres://pnczxxjujgbowc:4597bb69f36e5bab482200d7ac0178fbea321764eb1ef2a103aa1f5c37694fd1@ec2-44-207-133-100.compute-1.amazonaws.com:5432/df0o1s75k024ud', encoding='utf8')
+                db = create_engine('postgresql://pnczxxjujgbowc:4597bb69f36e5bab482200d7ac0178fbea321764eb1ef2a103aa1f5c37694fd1@ec2-44-207-133-100.compute-1.amazonaws.com:5432/df0o1s75k024ud', encoding='utf8')
                 connection = db.raw_connection()
                 try:
                     cursor = connection.cursor()
