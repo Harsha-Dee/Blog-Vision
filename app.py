@@ -24,7 +24,7 @@ app.config['SECRET_KEY'] = '123456789234'
 # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:harsha666@localhost/blogdatabase'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://pnczxxjujgbowc:4597bb69f36e5bab482200d7ac0178fbea321764eb1ef2a103aa1f5c37694fd1@ec2-44-207-133-100.compute-1.amazonaws.com:5432/df0o1s75k024ud'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://oayzpfbkwgylfr:937daea92e30bdaf8116b32f8e448f96ddfde812bcad93cc18ea20db714f4654@ec2-34-194-40-194.compute-1.amazonaws.com:5432/dch14ktdtkg2oi'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 
