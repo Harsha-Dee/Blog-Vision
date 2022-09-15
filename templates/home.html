@@ -1,0 +1,36 @@
+{% extends "base.html"%} {% block title %} Home {% endblock %} {% block content
+%}
+<div class="container">
+  <div class="row no-gutters">
+    <div class="col-lg-7 px-5 pt-3 mt-5">
+      <h1 class="page-header-ui-title pt-5 mt-5">
+        
+        BLOG VISION
+      </h1>
+
+      <p class="pt-3">
+        You can buy attention (advertising). You can beg for attention from the
+        media (PR). You can bug people one at a time to get attention (sales).
+        Or you can earn attention by creating something interesting and valuable
+        and then publishing it online for free. 
+        <p><h4>~David Meerman Scott</h4></p>
+      </p>
+
+      <div class="page-header-ui-text mb-4"></div>
+
+      <!-- <button role="button" class="btn btn-primary btn-lg shadow fw-500" data-bs-target="/create_post">
+                Create Post                                  
+            </button> -->
+      <a href="/create_post" class="btn btn-primary">Create Post</a>
+    </div>
+
+    <div class="col-lg-5 my-5 mt-5">
+      <img
+        src="{{ url_for('static', filename='images/laptop.png') }}"
+        alt=""
+        class="img-fluid"
+      />
+    </div>
+  </div>
+</div>
+{% endblock %}

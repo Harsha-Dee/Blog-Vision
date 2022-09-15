@@ -1,0 +1,59 @@
+{% extends "base.html"%} 
+
+{%block style%}
+  <link rel="stylesheet" href="../static/create_post.css">
+{% endblock %}
+
+{% block title %} Update Posts {% endblock %} 
+
+{%block content %}
+    
+    <h1 align = center>Update Post</h1>
+    
+    <form method="POST">
+      <!-- title -->
+      <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">Title</label>
+        <!-- <input
+          type="text"
+          class="form-control"
+          id="exampleFormControlInput1"
+          name="blog_title"
+          value =  {{post.title}}
+        /> -->
+        <textarea
+          class="form-control"
+          id="exampleFormControlTextarea1"
+          rows="1"
+          name="blog_title"
+        >{{post.title}}</textarea>
+      </div>
+    
+      <!-- content -->
+      <div class="mb-3">
+        <label for="exampleFormControlTextarea1" class="form-label">Content</label>
+        <textarea
+          class="form-control"
+          id="exampleFormControlTextarea1"
+          rows="5"
+          name="blog_content"
+        >{{post.content}}</textarea>
+      </div>
+    
+      <!-- submit button -->
+      <div align="center">
+        <button type="submit" class="btn btn-lg btn-primary">Update</button>
+      </div>
+    
+    </form>
+    
+    <br>
+    <!-- back button -->
+    <div align="center">
+        <a href="/home">
+            <button type="button" class="btn btn-lg btn-secondary">Back</button>
+        </a>
+    </div>
+    
+    {% endblock%}
+    

@@ -1,0 +1,359 @@
+{% extends "base.html"%} 
+
+{% block style %} 
+<link rel="stylesheet" href="../static/post.css"> 
+<link rel="stylesheet" href="../static/comment.css">
+<link
+      href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+{% endblock %}
+
+{% block title %} post {% endblock %} 
+
+
+
+
+{%block content%}
+
+<!-- <br />
+<div class="card body">
+  <h4>{{post.user.username}}</h4>
+  <br />
+  <div class="d-flex justify-content-between align-items-center">
+    <h2>{{post.title}}</h2>
+  </div>
+  <br />
+  <div>posted on {{post.date_created}}</div>
+  <br />
+  <hr />
+
+  <textarea name="context-box" id="content-box" cols="30" rows="50">{{post.content}}</textarea>
+  dont use this line<div>{{post.content}}</div>
+</div> -->
+
+<div class="container">
+  <div class="card">
+    <div class="card-contents">
+      <!-- icon details -->
+      <div class="blog-details">
+        <div class="icon-text">
+          <span class="icon"><i class="ri-calendar-2-fill"></i></span>
+          <span class="text">{{post.date_created}}</span>
+        </div>
+
+        <div class="icon-text">
+          <span class="icon"><i class="ri-user-line"></i></span>
+          <span class="text"><a class="userpost" href="/posts/{{post.author}}">{{post.user.username}}</a></span>
+        </div>
+
+        <div class="icon-text">
+          <span class="icon"><i class="ri-message-line"></i></span>
+          <span class="text">{{post.comments | length }}</span>
+        </div>
+
+
+        <div class="icon-text">
+          {% if user.id in post.likes|map(attribute="author")|list %}
+          <span class="icon"><a class="like" href="/like-post/{{post.id}}"><i class="ri-heart-fill"></i></a></span>
+          <span class="text">{{post.likes | length }}</span>
+          {%else%}
+          <span class="icon"><a class="like" href="/like-post/{{post.id}}"><i class="ri-heart-line"></i></a></span>
+          <span class="text">{{post.likes | length }}</span>
+          {%endif%}
+        </div>
+      </div>
+
+      <h2 class="blog-title">{{post.title}}</h2>
+
+      <p class="excerpt"style="white-space: pre-line">{{post.content}}</p>
+
+      <div class="blog-cta">
+          {% if user.id == post.author %}
+              <a href="/delete_post/{{post.id}}" class="button1">Delete</a>
+              <a href="/update_post/{{post.id}}" class="button2">Update</a>
+              <a href="/posts" class="button3">back</a>
+          {% else %}
+              <a href="/posts" class="button3">back</a>
+          {% endif %}
+      </div>
+    </div>
+  </div>
+</div>  
+
+
+
+
+
+<br />
+<br />
+<br />
+
+
+
+
+<!-- comments -->
+<!-- <form
+  class="input-group mb-3"
+  method="POST"
+  action="/create-comment/{{post.id}}"
+>
+  <input
+    type="text"
+    id="text"
+    name="text"
+    class="form-control"
+    placeholder="Comment something!"
+  />
+  <button type="submit" class="btn btn-primary">Comment</button>
+</form> -->
+
+
+
+<div class="comment-box">
+  <h2>Comments</h2>
+  <form method="POST"
+  action="/create-comment/{{post.id}}">
+      <textarea name="comment" id="" cols="30" rows="10" placeholder="Your comment here"></textarea>
+
+      <button type="submit">Submit Comment</button>
+  </form>
+  
+</div>
+
+<!-- collapse div for comments -->
+<div class="collapse" id="comments-{{post.id}}">
+  <!-- <div class="card"> -->
+  <!-- <div class="card-body" id="comments-expanded-{{post.id}}"> -->
+
+  {% for comment in post.comments %}
+
+  <!-- <div class="card">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <a href="/posts/{{comment.author}}">{{comment.user.username}}</a> :
+          {{comment.text}}
+        </div>
+        <div>
+          <small class="text-muted"> {{comment.date_created}}</small>
+          {% if user.id == comment.author or user.id == post.author %}
+          <div class="btn-group">
+            <button
+              type="button"
+              class="btn btn-sm btn-primary dropdown-toggle"
+              data-bs-toggle="dropdown"
+            ></button>
+            <ul class="dropdown-menu">
+              <li>
+                <a href="/delete-comment/{{comment.id}}" class="dropdown-item"
+                  >Delete</a
+                >
+              </li>
+            </ul>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+      <br> -->
+
+
+      <div class="container px-5 mx-5">
+        <div class="card">
+          <div class="card-contents">
+            <!-- icon details -->
+            <div class="blog-details">
+              <div class="icon-text">
+                <span class="icon"><i class="ri-calendar-2-fill"></i></span>
+                <span class="text">{{comment.date_created}}</span>
+              </div>
+  
+              <div class="icon-text">
+                <span class="icon"><i class="ri-user-line"></i></span>
+                <span class="text">{{comment.user.username}}</span>
+              </div>
+  
+            </div>
+  
+            <!-- <h2 class="blog-title">Post Title</h2> -->
+  
+            <p class="excerpt">
+              {{comment.text}}
+            </p>
+            {% if user.id == comment.author or user.id == post.author %}
+            <div class="blog-cta">
+              <a href="/delete-comment/{{comment.id}}" class="button1">Delete</a>
+              <a data-bs-toggle="collapse" href="#replies-{{comment.id}}" class="button2">Reply</a>
+            </div>
+            {% else %}
+            <div class="blog-cta">
+              <a data-bs-toggle="collapse" href="#replies-{{comment.id}}" class="button2">Reply</a>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+
+
+
+    
+
+
+      <!-- newcode -->
+      <div class="collapse" id = "replies-{{comment.id}}">
+        <!-- <div class="card">
+          <div class="card-body">
+
+            
+            <form
+              class="input-group mb-3"
+              method="POST"
+              action="/create-reply/{{post.id}}/{{comment.id}}"
+            >
+              <input
+                type="text"
+                id="text"
+                name="reply"
+                class="form-control"
+                placeholder="Add a public comment..."
+              />
+              <button type="submit" class="btn btn-primary">Comment</button>
+            </form>
+
+          
+          </div>
+        </div> -->
+
+        <div class="comment-box">
+          <h2>Reply</h2>
+          <form method="POST"
+          action="/create-reply/{{post.id}}/{{comment.id}}">
+              <textarea name="reply" id="" cols="30" rows="10" placeholder="Your comment here"></textarea>
+        
+              <button type="submit">Submit Reply</button>
+          </form>
+          
+        </div>
+      </div>
+
+            <!-- looping replies -->
+            {% for reply in comment.replies %}
+
+
+            <!-- <div class="card">
+
+              <div class="card-body">
+
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <a href="/posts/{{reply.author}}">{{reply.user.username}}</a> :
+                    {{reply.text}}
+                  </div>
+                  <div>
+                    <small class="text-muted"> {{reply.date_created}}</small>
+                    {% if user.id == reply.author or user.id == post.author %}
+                    <div class="btn-group">
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-primary dropdown-toggle"
+                        data-bs-toggle="dropdown"
+                      ></button>
+                      <ul class="dropdown-menu">
+                        <li>
+                          <a href="/delete-reply/{{reply.id}}" class="dropdown-item"
+                            >Delete</a
+                          >
+                        </li>
+                      </ul>
+                    </div>
+                    {% endif %}
+                  </div>
+                </div>
+
+              </div>
+            </div>
+              <br> -->
+
+              <div class="container">
+                <div class="card">
+                  <div class="card-contents">
+                    <!-- icon details -->
+                    <div class="blog-details">
+                      <div class="icon-text">
+                        <span class="icon"><i class="ri-calendar-2-fill"></i></span>
+                        <span class="text">{{reply.date_created}}</span>
+                      </div>
+          
+                      <div class="icon-text">
+                        <span class="icon"><i class="ri-user-line"></i></span>
+                        <span class="text">{{reply.user.username}}</span>
+                      </div>
+          
+                    </div>
+          
+                    <!-- <h2 class="blog-title">Post Title</h2> -->
+          
+                    <p class="excerpt">
+                      {{reply.text}}
+                    </p>
+                    {% if user.id == comment.author or user.id == post.author %}
+                    <div class="blog-cta">
+                      <a href="/delete-reply/{{reply.id}}" class="button1">Delete</a>
+                    </div>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+        
+
+
+            {% endfor %}
+
+
+
+
+      <!-- <p class="card-text">
+        <a data-bs-toggle="collapse" href="#replies-{{comment.id}}" role="button">
+          <small>Add a public comment...</small>
+        </a>
+      </p> -->
+
+      <!-- newcodeending -->
+
+
+    <!-- </div> -->
+
+    <br />
+  <!-- </div> -->
+  <br />
+  {% endfor %}
+
+  <!-- </div> -->
+  <!-- </div> -->
+</div>
+
+<p class="card-text">
+  {% if post.comments|length > 0 %}
+  <a data-bs-toggle="collapse" href="#comments-{{post.id}}" role="button">
+    <small>View {{post.comments|length}} Comments</small>
+  </a>
+  {% else %}
+  <small class="text-muted">No Comments</small>
+  {% endif %}
+</p>
+
+<br />
+
+<!-- back button -->
+<div align="center">
+  <a href="/posts"
+    ><button type="button" class="btn btn-lg btn-secondary">Back</button></a
+  >
+</div>
+
+{% endblock%}

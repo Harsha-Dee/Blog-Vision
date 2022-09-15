@@ -1,0 +1,13 @@
+.form-control{
+    border-radius: 5px;
+    border: 1px solid #86b0b6;
+}
+
+.button{
+    border: 0;
+    padding: 10px 30px;
+    background: #86b0b6;
+    font-size: 18px;
+    border-radius: 5px;
+    color:#fff;
+}

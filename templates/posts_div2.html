@@ -1,0 +1,74 @@
+{% extends "base.html"%}
+
+{% block style %} 
+<link rel="stylesheet" href="../static/post.css"> 
+<link
+      href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+{% endblock %}
+
+{% block title %}POSTDIV{% endblock %}
+
+{% block content %}
+
+<!-- heading of the posts page -->
+<h1 align="center">{% block header %}Posts{% endblock %}</h1>
+
+{% for post in posts %}
+
+<div class="container">
+    <div class="card">
+      <div class="card-contents">
+        <!-- icon details -->
+        <div class="blog-details">
+          <div class="icon-text">
+            <span class="icon"><i class="ri-calendar-2-fill"></i></span>
+            <span class="text">{{post.date_created}}</span>
+          </div>
+
+          <div class="icon-text">
+            <span class="icon"><i class="ri-user-line"></i></span>
+            <span class="text"><a class="userpost" href="/posts/{{post.author}}">{{post.user.username}}</a></span>
+          </div>
+
+          <div class="icon-text">
+            <span class="icon"><i class="ri-message-line"></i></span>
+            <span class="text">{{post.comments | length }}</span>
+          </div>
+
+
+          <div class="icon-text">
+            {% if user.id in post.likes|map(attribute="author")|list %}
+            <span class="icon"><a class="like" href="/like-post/{{post.id}}"><i class="ri-heart-fill"></i></a></span>
+            <span class="text">{{post.likes | length }}</span>
+            {%else%}
+            <span class="icon"><a class="like" href="/like-post/{{post.id}}"><i class="ri-heart-line"></i></a></span>
+            <span class="text">{{post.likes | length }}</span>
+            {%endif%}
+          </div>
+        </div>
+
+        <h2 class="blog-title">{{post.title}}</h2>
+
+        <p class="excerpt">
+          {{post.content|truncate(600, True, '...')}}
+        </p>
+
+        <div class="blog-cta">
+            {% if user.id == post.author %}
+                <a href="/delete_post/{{post.id}}" class="button1">Delete</a>
+                <a href="/update_post/{{post.id}}" class="button2">Update</a>
+                <a href="/view_post/{{post.id}}" class="button3">Read more</a>
+            {% else %}
+                <a href="/view_post/{{post.id}}" class="button3">Read more</a>
+            {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endfor %}
+
+
+{% endblock %}
