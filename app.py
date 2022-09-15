@@ -135,30 +135,32 @@ def signUp():
 
             #create a new user
             #sha256 is just an encryption method
-                hashedpass = generate_password_hash(password, method='sha256')
+                # hashedpass = generate_password_hash(password, method='sha256') ---
 
                 #db = create_engine('mysql+pymysql://root:harsha666@localhost/blogdatabase', encoding='utf8')
-                db = create_engine('postgresql://pnczxxjujgbowc:4597bb69f36e5bab482200d7ac0178fbea321764eb1ef2a103aa1f5c37694fd1@ec2-44-207-133-100.compute-1.amazonaws.com:5432/df0o1s75k024ud', encoding='utf8')
-                connection = db.raw_connection()
-                try:
-                    cursor = connection.cursor()
-                    cursor.callproc("sign_up_user", [email, username, hashedpass])
-                    cursor.close()
-                    connection.commit()
-                finally:
-                    connection.close()
 
+                #-----------
+                # db = create_engine('postgresql://pnczxxjujgbowc:4597bb69f36e5bab482200d7ac0178fbea321764eb1ef2a103aa1f5c37694fd1@ec2-44-207-133-100.compute-1.amazonaws.com:5432/df0o1s75k024ud', encoding='utf8')
+                # connection = db.raw_connection()
+                # try:
+                #     cursor = connection.cursor()
+                #     cursor.callproc("sign_up_user", [email, username, hashedpass])
+                #     cursor.close()
+                #     connection.commit()
+                # finally:
+                #     connection.close()
+                #------------
 
                # db.engine.execute(f"CALL sign_up_user('{email}', '{username}', '{hashedpass}')")
 
 
-                # new_user = User(email = email, username = username, password = generate_password_hash(password, method='sha256'))
+                new_user = User(email = email, username = username, password = generate_password_hash(password, method='sha256'))
 
              #adding new user to database
 
-                # db.session.add(new_user)
-                # db.session.commit()
-                # login_user(new_user, remember=True)
+                db.session.add(new_user)
+                db.session.commit()
+                login_user(new_user, remember=True)
 
                 flash('User Created', category='success')
 
