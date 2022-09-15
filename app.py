@@ -24,7 +24,7 @@ app.config['SECRET_KEY'] = '123456789234'
 # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:harsha666@localhost/blogdatabase'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://pnczxxjujgbowc:4597bb69f36e5bab482200d7ac0178fbea321764eb1ef2a103aa1f5c37694fd1@ec2-44-207-133-100.compute-1.amazonaws.com:5432/df0o1s75k024ud'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://bbngoayeibqzee:64f4aa265154ae5208b9a8f8011cc1b31d4f1dc0b06c67ad4091cc6ae69ff17b@ec2-44-205-63-142.compute-1.amazonaws.com:5432/d36q2crd30gejk'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 
@@ -135,34 +135,37 @@ def signUp():
 
             #create a new user
             #sha256 is just an encryption method
-                hashedpass = generate_password_hash(password, method='sha256')
+                # hashedpass = generate_password_hash(password, method='sha256') ---
 
                 #db = create_engine('mysql+pymysql://root:harsha666@localhost/blogdatabase', encoding='utf8')
-                db = create_engine('postgres://pnczxxjujgbowc:4597bb69f36e5bab482200d7ac0178fbea321764eb1ef2a103aa1f5c37694fd1@ec2-44-207-133-100.compute-1.amazonaws.com:5432/df0o1s75k024ud', encoding='utf8')
-                connection = db.raw_connection()
-                try:
-                    cursor = connection.cursor()
-                    cursor.callproc("sign_up_user", [email, username, hashedpass])
-                    cursor.close()
-                    connection.commit()
-                finally:
-                    connection.close()
 
+                #-----------
+                # db = create_engine('postgresql://pnczxxjujgbowc:4597bb69f36e5bab482200d7ac0178fbea321764eb1ef2a103aa1f5c37694fd1@ec2-44-207-133-100.compute-1.amazonaws.com:5432/df0o1s75k024ud', encoding='utf8')
+                # connection = db.raw_connection()
+                # try:
+                #     cursor = connection.cursor()
+                #     cursor.callproc("sign_up_user", [email, username, hashedpass])
+                #     cursor.close()
+                #     connection.commit()
+                # finally:
+                #     connection.close()
+                #------------
 
                # db.engine.execute(f"CALL sign_up_user('{email}', '{username}', '{hashedpass}')")
 
 
-                # new_user = User(email = email, username = username, password = generate_password_hash(password, method='sha256'))
+                new_user = User(email = email, username = username, password = generate_password_hash(password, method='sha256'))
 
              #adding new user to database
 
-                # db.session.add(new_user)
-                # db.session.commit()
-                # login_user(new_user, remember=True)
+                db.session.add(new_user)
+                db.session.commit()
+                login_user(new_user, remember=True)
 
                 flash('User Created', category='success')
 
             #after adding redirect them to the home page where you can see all your post
+            #redirecting the user after logging in
                 return redirect(url_for('home'))
 
     
